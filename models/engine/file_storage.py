@@ -11,8 +11,7 @@ from models.user import User
 
 
 class FileStorage:
-    """This class serializes instances to a JSON file and
-    deserializes JSON file to instances.
+    """Represent an abstracted storage engine.
 
     Attributes:
         __file_path (str): The name of the file to save objects to.
@@ -60,10 +59,11 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """Delete an existing object from __objects, if it exists."""
-        if object is not none:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-            self.__objects.pop(key, none)
+        """Delete a given object from __objects, if it exists."""
+        try:
+            del self.__objects["{}.{}".format(type(obj).__name__, obj.id)]
+        except (AttributeError, KeyError):
+            pass
 
     def close(self):
         """Call the reload method."""
