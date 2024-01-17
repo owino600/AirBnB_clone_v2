@@ -2,6 +2,7 @@
 """ """
 from tests.test_models.test_base_model import test_basemodel
 from models.place import Place
+import os
 
 
 class test_Place(test_basemodel):
@@ -16,7 +17,7 @@ class test_Place(test_basemodel):
     def test_city_id(self):
         """ """
         new = self.value()
-        self.assertEqual(type(new.city_id), str)
+        self.assertEqual(type(new.city_id), str if os.environ.get('HBNB_TYPE_STORAGE') != 'db' else type (None))
 
     def test_user_id(self):
         """ """
@@ -26,7 +27,7 @@ class test_Place(test_basemodel):
     def test_name(self):
         """ """
         new = self.value()
-        self.assertEqual(type(new.name), str)
+        self.assertEqual(type(new.name), str if os.environ.get('HBNB_TYPE_STORAGE') != 'db' else type (None))
 
     def test_description(self):
         """ """
@@ -36,7 +37,7 @@ class test_Place(test_basemodel):
     def test_number_rooms(self):
         """ """
         new = self.value()
-        self.assertEqual(type(new.number_rooms), int)
+        self.assertEqual(type(new.number_rooms), int if os.environ.get('HBNB_TYPE_STORAGE') != 'db' else type (None))
 
     def test_number_bathrooms(self):
         """ """
@@ -46,7 +47,7 @@ class test_Place(test_basemodel):
     def test_max_guest(self):
         """ """
         new = self.value()
-        self.assertEqual(type(new.max_guest), int)
+        self.assertEqual(type(new.max_guest), int if os.environ.get('HBNB_TYPE_STORAGE') != 'db' else type (None))
 
     def test_price_by_night(self):
         """ """
