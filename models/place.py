@@ -3,13 +3,15 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship, backref
+from sqlalchemy import Table
 import os
 import models
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from models import type_storage
 
-if os.environ.get("HBNB_TYPE_STORAGE") == "db":
+if type_storage == "db":
     place_amenity = Table('place_amenity', Base.metadata, Column('place_id', String(60), ForeignKey('place.id'), primary_key=True), Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
 
     
@@ -17,7 +19,6 @@ class Place(BaseModel, Base):
 
     __tablename__ = 'places'
 
-    
     """ A place to stay """
     city_id = Column(String(60), nullable=False, ForeignKey=("cities.id"))
     user_id = Column(String(60), nullable=False, ForeignKey=("users.id"))
@@ -32,3 +33,4 @@ class Place(BaseModel, Base):
     amenity_ids = []
     
     reviews = relationship(Review, backref="place", cascade="all, delete")
+    amenities = relationship('Amenity', secondary=place_amenity, backref='place_amenities')
