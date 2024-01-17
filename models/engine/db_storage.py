@@ -33,3 +33,14 @@ class DBStorage:
             def reload(self):
                 Base.metadata.create_all(engine)
                 self.__session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+
+            def all(self, cls=None):
+                if cls:
+                    obj = self.__session.query(self.classes()[cls])
+                else:
+                    obj = self.__session.query(User).all()
+                    obj = self.__session.query(State).all()
+                    obj = self.__session.query(City).all()
+                    obj = self.__session.query(Amenity).all()
+                    obj = self.__session.query(Place).all()
+                    obj = self.__session.query(Review).all()
