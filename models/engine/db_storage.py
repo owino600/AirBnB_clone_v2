@@ -8,7 +8,6 @@ class DBStorage:
 
     def __init__(self):
         self.__engine = None
-        self.__session = None
 
         user = os.environ.get(HBNB_MYSQL_USER)
         password = os.environ.get(HBNB_MYSQL_PWD)
