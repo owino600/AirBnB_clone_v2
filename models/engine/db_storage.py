@@ -24,8 +24,12 @@ class DBStorage:
                     self.__session.add(obj)
 
             def save(self):
-                self.__session.save(obj)
+                self.__session.commit(obj)
 
             def delete(self, obj=None):
                 if obj:
                     self.__session.delete(obj)
+
+            def reload(self):
+                Base.metadata.create_all(engine)
+                self.__session = sessionmaker(bind=self.__engine, expire_on_commit=False)
