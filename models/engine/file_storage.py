@@ -2,12 +2,12 @@
 """This is the file storage class for AirBnB."""
 import json
 from models.base_model import BaseModel
-from models.amenity import User
+from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
-from models.user import Amenity
+from models.user import User
 
 
 class FileStorage:
@@ -61,10 +61,9 @@ class FileStorage:
 
     def delete(self, obj=None):
         """Delete an existing object from __objects, if it exists."""
-        try:
-            del self.__objects["{}.{}".format(type(obj).__name__, obj.id)]
-        except (AttributeError, KeyError):
-            pass
+        if object is not none:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            self.__objects.pop(key, none)
 
     def close(self):
         """Call the reload method."""
