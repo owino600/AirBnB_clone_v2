@@ -39,6 +39,7 @@ for state_key in all_states.keys():
 
             # Delete the new State
             fs.delete(new_state)
+
             # All States
             all_states = fs.all(State)
             print("All States: {}".format(len(all_states.keys())))
