@@ -5,7 +5,7 @@ from sqlalchemy import Column, String
 from sqlalchemy import relationship
 
 
-class User(BaseModel):
+class User(BaseModel, Base):
 
     __tablename__ = 'users'
 
