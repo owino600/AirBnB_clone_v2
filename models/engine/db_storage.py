@@ -1,6 +1,12 @@
 from sqlalchemy import create_engine
+from aqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
+from models.state import State
+from models.city import City
+from model.user import User
+from model.place import Place
+from models.review import Review
 
 class DBStorage:
     __engine = None
@@ -14,33 +20,35 @@ class DBStorage:
         host = os.environ.get(HBNB_MYSQL_HOST, localhost)
         database = os.environ.get(HBNB_MYSQL_DB)
         env = os.environ.get(HBNB_ENV)
-        self.__engine = create_engine('mysql+mysqldb://hbnb_dev@localhost/hbnb_dev_db', pool_pre_ping=True)
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(user, password, host, db), pool_pre_ping=True)
 
         if env == 'test':
             self.__engine.execute("DROP TABLE IF EXISTS {}".format(', '.join(self.all().keys())))
 
-            def new(self, obj):
-                if obj:
-                    self.__session.add(obj)
+    def new(self, obj):
+        if obj:
+            self.__session.add(obj)
 
-            def save(self):
-                self.__session.commit(obj)
+    def save(self):
+        self.__session.commit(obj)
 
-            def delete(self, obj=None):
-                if obj:
-                    self.__session.delete(obj)
+    def delete(self, obj=None):
+        if obj:
+            self.__session.delete(obj)
 
-            def reload(self):
-                Base.metadata.create_all(engine)
-                self.__session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+    def reload(self):
+        Base.metadata.create_all(engine)
+        self.__session = sessionmaker(bind=self.__engine, expire_on_commit=False)
 
-            def all(self, cls=None):
-                if cls:
-                    obj = self.__session.query(self.classes()[cls])
-                else:
-                    obj = self.__session.query(User).all()
-                    obj = self.__session.query(State).all()
-                    obj = self.__session.query(City).all()
-                    obj = self.__session.query(Amenity).all()
-                    obj = self.__session.query(Place).all()
-                    obj = self.__session.query(Review).all()
+    def all(self, cls=None):
+        if cls:
+            obj = self.__session.query(self.classes()[cls])
+        else:
+            obj = self.__session.query(User).all()
+            obj = self.__session.query(State).all()
+            obj = self.__session.query(City).all()
+            obj = self.__session.query(Amenity).all()
+            obj = self.__session.query(Place).all()
+            obj = self.__session.query(Review).all()
+    def close(self):
+        self.__session.close()

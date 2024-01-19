@@ -2,6 +2,7 @@
 """ Review module for the HBNB project """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
+from aqlalchemy.ext.declarative import declarative_base
 
 
 class Review(BaseModel, Base):

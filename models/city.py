@@ -3,6 +3,8 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship, backref
+from models import Place
+from aqlalchemy.ext.declarative import declarative_base
 
 
 class City(BaseModel, Base):

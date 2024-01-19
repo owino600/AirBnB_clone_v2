@@ -1,8 +1,11 @@
 #!/usr/bin/python3
 """This module defines a class User"""
+from aqlalchemy.ext.declarative import declarative_base
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy import relationship, backref
+from models.place import Place
+from models.review import Review
 
 
 class User(BaseModel, Base):

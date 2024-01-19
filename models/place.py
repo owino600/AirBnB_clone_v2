@@ -12,7 +12,7 @@ from models.review import Review
 from models import type_storage
 
 if type_storage == "db":
-    place_amenity = Table('place_amenity', Base.metadata, Column('place_id', String(60), ForeignKey('place.id'), primary_key=True), Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
+    place_amenity = Table("place_amenity", Base.metadata, Column('place_id', String(60), ForeignKey('place.id'), primary_key=True), Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
 
     
 class Place(BaseModel, Base):
@@ -31,6 +31,18 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
-    
-    reviews = relationship(Review, backref="place", cascade="all, delete")
-    amenities = relationship('Amenity', secondary=place_amenity, backref='place_amenities')
+    if type_storage == "db":
+        reviews = relationship("Review", backref="place", cascade="all, delete")
+        amenities = relationship("Amenity", secondary=place_amenity, back_populates='place_amenities')
+
+    else:
+        @property
+        def reviews(self):
+            var = models.storage.all()
+            listu = []
+            result = []
+            for key in var:
+                reviews = key.replace('.', ' ')
+                reviews = shlex.split(reviews)
+                if (reviews[0] == 'Review'):
+                    listu .append(var[key])
