@@ -6,12 +6,11 @@ from fabric.api import local
 
 def do_pack():
     dt = datetime.utcnow()
-    local("mkdir -p version")
-    
-    file = "version/web_static_{}{}.tgz".format(dt)
-    if os.path.exists(file):
-        if local("tar -cvzf {} web_static".format(file)):
+    """Create a tar gzipped archive of the directory web_static."""
+    file = "version/web_static_{}{}{}{}{}{}.tgz".format(dt.year, dt.month,dt.day, dt.hour, dt.minute, dt.second)
+    if os.path.isdir("versions") is False:
+        if local("mkdir -p versions").failed is True:
             return None
-        return file
-    else:
+    if local("tar -cvzf {} web_static".format(file)).failed is True:
         return None
+    return file
