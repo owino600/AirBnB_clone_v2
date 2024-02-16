@@ -1,7 +1,6 @@
 #!/bin/usr/python3
 """Write a script that starts a Flask web application"""
 from flask import Flask
-from werkzeug.urls import url_quote
 
 app = Flask(__name__)
 @app.route("/", strict_slashes=False)
