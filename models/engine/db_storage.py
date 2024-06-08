@@ -10,21 +10,12 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from sqlalchemy import create_engine
-<<<<<<< HEAD
 from aqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import os
-from models.state import State
-from models.city import City
-from model.user import User
-from model.place import Place
-from models.review import Review
-=======
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 
->>>>>>> ae8a35f08e3067ef6f721081a0e8c49f198c4c7f
 
 class DBStorage:
     """Represents a database storage engine.
@@ -48,21 +39,19 @@ class DBStorage:
         if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
-<<<<<<< HEAD
         user = os.environ.get(HBNB_MYSQL_USER)
         password = os.environ.get(HBNB_MYSQL_PWD)
         host = os.environ.get(HBNB_MYSQL_HOST, localhost)
         database = os.environ.get(HBNB_MYSQL_DB)
         env = os.environ.get(HBNB_ENV)
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(user, password, host, db), pool_pre_ping=True)
-=======
+
     def all(self, cls=None):
         """Query on the curret database session all objects of the given class.
->>>>>>> ae8a35f08e3067ef6f721081a0e8c49f198c4c7f
 
-        If cls is None, queries all types of objects.
+        If cls is None, queries all types of objects. """
 
-<<<<<<< HEAD
+
     def new(self, obj):
         if obj:
             self.__session.add(obj)
@@ -90,10 +79,9 @@ class DBStorage:
             obj = self.__session.query(Review).all()
     def close(self):
         self.__session.close()
-=======
         Return:
             Dict of queried classes in the format <class name>.<obj id> = obj.
-        """
+        
         if cls is None:
             objs = self.__session.query(State).all()
             objs.extend(self.__session.query(City).all())
@@ -131,4 +119,3 @@ class DBStorage:
     def close(self):
         """Close the working SQLAlchemy session."""
         self.__session.close()
->>>>>>> ae8a35f08e3067ef6f721081a0e8c49f198c4c7f
